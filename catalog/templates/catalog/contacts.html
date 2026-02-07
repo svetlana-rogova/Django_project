@@ -10,7 +10,7 @@
 <body>
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
     <h5 class="my-0 mr-md-auto font-weight-normal">Skystore</h5>
-    <nav class="ms-5">
+    <nav class="ms-md-4">
         <a class="p-2 btn btn-outline-primary" href="/">Каталог</a>
         <a class="p-2 btn btn-outline-primary" href="/contacts/">Контакты</a>
     </nav>
@@ -31,8 +31,16 @@
                             <td>Россия</td>
                         </tr>
                         <tr>
-                            <td class="w-25">ИНН</td>
-                            <td>91-1144442</td>
+                            <td class="w-25">Номер</td>
+                            <td>
+                                {{ contact.phone }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="w-25">Email</td>
+                            <td>
+                                {{ contact.email }}
+                            </td>
                         </tr>
                         <tr>
                             <td class="w-25">Город</td>
@@ -52,15 +60,18 @@
                         {% csrf_token %}
                         <div class="mb-3">
                             <label for="name">Имя</label>
-                            <input type="text" name="name" class="form-control" id="name" placeholder="Ваше имя" required>
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Ваше имя"
+                                   required>
                         </div>
                         <div class="mb-3">
                             <label for="phone">Телефон</label>
-                            <input type="text" name="phone" class="form-control" id="phone" placeholder="Контактный телефон" required>
+                            <input type="text" name="phone" class="form-control" id="phone"
+                                   placeholder="Контактный телефон" required>
                         </div>
                         <div class="mb-3">
                             <label for="message">Сообщение</label>
-                            <textarea type="text" name="message" class="form-control" id="message" placeholder="Сообщение" required></textarea>
+                            <textarea type="text" name="message" class="form-control" id="message"
+                                      placeholder="Сообщение" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Отправить</button>
                     </form>
