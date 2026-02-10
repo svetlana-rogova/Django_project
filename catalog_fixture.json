@@ -1,0 +1,57 @@
+[
+{
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+        "name": "Manga",
+        "description": "Manga is a Japanese graphic novel that covers a wide range of genres, from romance and drama to action and fantasy."
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+        "name": "Comics",
+        "description": "A comic is a drawn story, a story in pictures. It combines elements of literature and visual arts."
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+        "name": "Bunny",
+        "description": "Dmitry Mordass iconic short story Bunny in comic book format",
+        "image": "images/bunny.png",
+        "category": 3,
+        "purchase_price": 1349,
+        "created_at": "2026-02-06T19:29:58.910Z",
+        "updated_at": "2026-02-06T19:29:58.910Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+        "name": "Gachiakuta",
+        "description": "The descendants of criminals who inhabit the slums face contempt and discrimination from people from other areas.",
+        "image": "images/Gachiakuta.png",
+        "category": 2,
+        "purchase_price": 1199,
+        "created_at": "2026-02-06T19:33:39.982Z",
+        "updated_at": "2026-02-06T19:33:39.982Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+        "name": "One Piece",
+        "description": "Gold Roger– the pirate king, who has achieved wealth, fame and power in his lifetime, has hidden somewhere in the vastness of this world a mysterious trea sure that everyone calls \"One Piece\".",
+        "image": "images/one_piece.png",
+        "category": 2,
+        "purchase_price": 2000,
+        "created_at": "2026-02-06T19:37:12.714Z",
+        "updated_at": "2026-02-06T20:12:28.502Z"
+    }
+}
+]
