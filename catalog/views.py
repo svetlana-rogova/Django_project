@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from catalog.models import Product, Contacts
+from catalog.models import Product, Contacts, Category
 
 
 def home(request):
@@ -22,3 +22,7 @@ def contacts(request):
 def show_contact(request):
     contact=Contacts.objects.first()
     return render(request, 'catalog/contacts.html', {'contact': contact})
+
+def info_product(request, product_id):
+    product=Product.objects.get(id=product_id)
+    return render(request, 'catalog/info_product.html', {'product': product})
