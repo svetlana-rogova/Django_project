@@ -1,0 +1,62 @@
+{% extends 'catalog/base.html' %}
+{% block title %}Добавление товара{% endblock %}
+
+{% block content %}
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Добавьте товар:</h1>
+</div>
+
+<div class="container">
+    <div class="row text-center  justify-content-center">
+        <div class="col-7 mb-3">
+            <div class="card h-100 d-flex flex-column">
+                <div class="card-body ">
+                    <form method="post" enctype="multipart/form-data" class="form-floating">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label for="category">Категория</label>
+                            <select name="category" id="category" class="form-select" aria-label="Default select example">
+                                <option value="" selected disabled>Выберите категорию</option>
+                                <option value="2">Manga</option>
+                                <option value="3">Comics</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="name">Название</label>
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Название"
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Добавьте фото</label>
+                            <input class="form-control" type="file" name="image" id="image">
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description">Описание</label>
+                            <textarea name="description" class="form-control" id="description"
+                                      placeholder="Описание" required></textarea>
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="purchase_price" class="form-label">Цена</label>
+
+                            <div class="input-group">
+                                <span class="input-group-text">руб</span>
+                                <input type="text" name="purchase_price" id="purchase_price" class="form-control">
+                                <span class="input-group-text">.00</span>
+
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Отправить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
