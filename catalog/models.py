@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 
 
 class Category(models.Model):
@@ -36,3 +37,9 @@ class Contacts(models.Model):
 
     def __str__(self):
         return f'{self.phone}, {self.email}'
+
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['name', 'description', 'image', 'category', 'purchase_price']
