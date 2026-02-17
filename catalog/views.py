@@ -2,43 +2,51 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.paginator import Paginator
 from catalog.models import Product, Contacts, Category, ProductForm
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView
+from django.views import View
 
 
-def home(request):
-    latest_products = Product.objects.order_by('-created_at')[:5]
-    products = Product.objects.all()
+class HomeListView(ListView):
+    model = Product
+    template_name = 'catalog/home.html'
+    context_object_name = 'posts'
+    paginate_by = 3
 
-    paginator = Paginator(products, 3)
-    page_number = request.GET.get('page', 1)
-    posts = paginator.page(page_number)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['latest_products'] = Product.objects.order_by('-created_at')[:5]
+        for p in context['latest_products']:
+            print(p.name)
+        return context
 
-    for p in latest_products:
-        print(p.name)
-    return render(request, 'catalog/home.html', {'latest_products': latest_products,  'posts': posts})
 
+class ContactsView(View):
+    template_name = 'catalog/contacts.html'
 
-def contacts(request):
-    contact = Contacts.objects.first()
-    if request.method == 'POST':
-        name = request.POST.get("name")
-        phone = request.POST.get("phone")
-        message = request.POST.get("message")
+    def get(self, request):
+        contact = Contacts.objects.first()
+        return render(request, self.template_name, {'contact': contact})
+
+    def post(self, request):
+        name = request.POST.get('name')
+        phone = request.POST.get('phone')
+        message = request.POST.get('message')
 
         return HttpResponse(f"Спасибо {name}! Сообщение получено")
-    return render(request, 'catalog/contacts.html', {'contact': contact} )
 
 
-def info_product(request, product_pk):
-    product=Product.objects.get(pk=product_pk)
-    return render(request, 'catalog/info_product.html', {'product': product})
+class InfoProductDetailView(DetailView):
+    model = Product
+    template_name = 'catalog/info_product.html'
+    context_object_name = 'product'
 
 
-def add_info(request):
-    if request.method == 'POST':
-        form = ProductForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return HttpResponse(f"Спасибо! В каталог добавлен новый товар.")
-    else:
-        form = ProductForm()
-    return render(request, 'catalog/add_info.html', {'form': form})
+class AddInfoCreateView(CreateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'catalog/add_info.html'
+
+    def form_valid(self, form):
+        self.object = form.save()
+        return HttpResponse(f"Спасибо! В каталог добавлен новый товар: {self.object.name}")
