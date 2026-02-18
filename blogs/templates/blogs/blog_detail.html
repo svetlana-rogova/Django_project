@@ -1,0 +1,14 @@
+{% extends 'blogs/base.html' %}
+
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="md-4">{{ blog.heading }}</h1>
+        <p>{{ blog.content }}</p>
+        <img src="{{ blog.image.url }}" class="card-img-top img-fluid" alt="{{ blog.heading }}">
+        <p>Создана: {{ blog.created_at }}</p>
+        <p>Количество просмотров {{ blog.count_views }}</p>
+        <a href="{% url 'blogs:blogs_list' %}" class="btn btn-secondary">Вернуться к списку</a>
+        <a href="{% url 'blogs:blog_delete' blog.pk %}" class="btn btn-danger md-3">Удалить</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'blogs/base.html' %}
+
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="md-4">Блог</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p }}
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a href="{% url 'blogs:blogs_list' %}" class="btn btn-secondary">Отмена</a>
+        </form>
+    </div>
+{% endblock %}

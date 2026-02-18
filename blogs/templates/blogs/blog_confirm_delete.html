@@ -1,0 +1,14 @@
+{% extends 'blogs/base.html' %}
+
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="md-4">Удалить пост</h1>
+        <p>Вы уверены, что хотите удалить "{{blog.heading}}"?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Удалить</button>
+            <a href="{% url 'blogs:blogs_list' %}" class="btn btn-secondary">Отмена</a>
+        </form>
+    </div>
+{% endblock %}
