@@ -1,0 +1,17 @@
+{% extends 'blogs/base.html' %}
+
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="md-4">Публикации</h1>
+        <ul class="list-group">
+            {% for blog in blogs %}
+                <li class="list-group-item">
+                    <a href="{% url 'blogs:blog_detail' blog.pk %}">{{blog.heading}}</a>
+                    <a href="{% url 'blogs:blog_update' blog.pk %}" class="btn btn-secondary md-3">Редактировать</a>
+                    <a href="{% url 'blogs:blog_delete' blog.pk %}" class="btn btn-danger md-3">Удалить</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+<header class="main-header">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg main-nav px-0">
+        <a class="navbar-brand" href="/">
+            <img src="https://kamgov.ru/assets/gallery_thumbnails/3e/3e801a8a332a7fbaf32eda2f9ae1c398.png" alt="Блог" style="height:70px;">
+        </a>
+        <div class="collapse navbar-collapse" >
+          <ul class="navbar-nav text-uppercase f1">
+            <li>
+              <a href="{% url 'blogs:blogs_list' %}" class="nav-link active active-first">Список статей</a>
+            </li>
+            <li>
+              <a href="{% url 'blogs:blog_form'%}" class="nav-link">Добавить статью</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <!-- /.container -->
+</header>
