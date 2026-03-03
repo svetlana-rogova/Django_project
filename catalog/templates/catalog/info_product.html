@@ -21,7 +21,9 @@
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
                         <li class="text-center"> {{ product.description }}</li>
                     </ul>
-                    <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
+                    <button type="button" class="btn btn-primary mt-auto">Купить</button>
+                    <a href="{% url 'catalog:delete' product.pk %}" class="btn btn-danger mt-auto">Удалить</a>
+                    <a href="{% url 'catalog:update' product.pk %}" class="btn btn-info mt-auto">Изменить</a>
                 </div>
             </div>
         </div>
