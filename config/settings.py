@@ -111,3 +111,6 @@ EMAIL_HOST_USER = os.getenv('MY_EMAIL')
 EMAIL_HOST_PASSWORD = os.getenv('PASSWORD_EMAIL')
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+FORBIDDEN_WORDS = ['казино', 'криптовалюта', 'крипта', 'дёшево', 'дешево', 'биржа', 'бесплатно', 'обман', 'полиция', 'радар']
+VALID_FORMATS_IMAGE = ['JPEG', 'PNG']

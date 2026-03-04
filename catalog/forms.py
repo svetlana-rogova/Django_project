@@ -2,9 +2,9 @@ from django import forms
 from .models import Product
 from django.core.exceptions import ValidationError
 from PIL import Image
+from django.conf import settings
 
-FORBIDDEN_WORDS = ['казино', 'криптовалюта', 'крипта', 'дёшево', 'дешево', 'биржа', 'бесплатно', 'обман', 'полиция', 'радар']
-VALID_FORMATS_IMAGE = ['JPEG', 'PNG']
+
 
 class ProductForm(forms.ModelForm):
     class Meta:
@@ -24,14 +24,14 @@ class ProductForm(forms.ModelForm):
 
     def clean_name(self):
         name = self.cleaned_data.get('name')
-        for word in FORBIDDEN_WORDS:
+        for word in settings.FORBIDDEN_WORDS:
             if name and word in name.lower():
                 raise ValidationError(f'Слово "{word}" запрещено.')
         return name
 
     def clean_description(self):
         description = self.cleaned_data.get('description')
-        for word in FORBIDDEN_WORDS:
+        for word in settings.FORBIDDEN_WORDS:
             if description and word in description.lower():
                 raise ValidationError(f'Слово "{word}" запрещено.')
         return description
@@ -47,7 +47,7 @@ class ProductForm(forms.ModelForm):
         if image.size > 5 * 1024 * 1024:
             raise ValidationError('Размер изображения не должен превышать 5 МБ')
         img = Image.open(image)
-        if img.format not in VALID_FORMATS_IMAGE:
+        if img.format not in settings.VALID_FORMATS_IMAGE:
             raise ValidationError('Файл должен иметь формат JPEG или PNG')
         return image
 
