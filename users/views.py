@@ -1,7 +1,11 @@
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
+from django.views.generic import  UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CustomUserCreationForm
 from django.core.mail import send_mail
+from .models import CustomUser
+from .forms import UserProfile
 
 
 class RegisterView(CreateView):
@@ -20,3 +24,13 @@ class RegisterView(CreateView):
         from_email = 'mifistofiya@gmail.com'
         recipient_list = [user_email]
         send_mail(subject, massage, from_email, recipient_list)
+
+
+class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = CustomUser
+    form_class = UserProfile
+    template_name = 'users/profile.html'
+    success_url = reverse_lazy('catalog:home')
+
+    def get_object(self):
+        return self.request.user
