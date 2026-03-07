@@ -4,6 +4,7 @@ from catalog.forms import ProductForm
 from catalog.models import Product, Contacts
 from django.views.generic import ListView, DetailView, UpdateView
 from django.views.generic.edit import CreateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.urls import reverse_lazy
 
@@ -40,18 +41,18 @@ class ContactsView(View):
         return HttpResponse(f"Спасибо {name}! Сообщение получено")
 
 
-class InfoProductDetailView(DetailView):
+class InfoProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = 'catalog/info_product.html'
     context_object_name = 'product'
 
 
-class InfoProductDeleteView(DeleteView):
+class InfoProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = 'catalog/info_product_confirm_delete.html'
     success_url = reverse_lazy('catalog:home')
 
-class AddInfoCreateView(CreateView):
+class AddInfoCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     template_name = 'catalog/add_info.html'
@@ -60,7 +61,7 @@ class AddInfoCreateView(CreateView):
         self.object = form.save()
         return HttpResponse(f"Спасибо! В каталог добавлен новый товар: {self.object.name}")
 
-class AddInfoUpdateView(UpdateView):
+class AddInfoUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     template_name = 'catalog/add_info.html'
