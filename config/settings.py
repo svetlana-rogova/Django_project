@@ -117,3 +117,5 @@ FORBIDDEN_WORDS = ['казино', 'криптовалюта', 'крипта', '
 VALID_FORMATS_IMAGE = ['JPEG', 'PNG']
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
+LOGIN_REDIRECT_URL = 'catalog:home'
