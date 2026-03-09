@@ -2,7 +2,13 @@
 {% block title %}Главная{% endblock %}
 
 {% block content %}
-
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    {% if user.is_authenticated %}
+        <h2>Добро пожаловать, {{ user.username }}!</h2>
+    {% else %}
+        <h2>Добро пожаловать на сайт для любителей манги и комиксов!</h2>
+    {% endif %}
+</div>
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">Каталог</h1>
     <p class="lead">На нашем сайте Вы можете приобрести следующие товары:</p>

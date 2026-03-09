@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'catalog',
     'blogs',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -114,3 +115,8 @@ EMAIL_USE_SSL = False
 
 FORBIDDEN_WORDS = ['казино', 'криптовалюта', 'крипта', 'дёшево', 'дешево', 'биржа', 'бесплатно', 'обман', 'полиция', 'радар']
 VALID_FORMATS_IMAGE = ['JPEG', 'PNG']
+
+AUTH_USER_MODEL = 'users.CustomUser'
+
+LOGIN_REDIRECT_URL = 'catalog:home'
+LOGIN_URL = 'users:login'
