@@ -23,11 +23,12 @@
                     </ul>
                     <button type="button" class="btn btn-primary mt-auto">Купить</button>
 
-                    {% if perms.catalog.can_unpublish_product %}
+                    {% if perms.catalog.can_unpublish_product or perms.catalog.delete_product or product.owner == request.user %}
                         <a href="{% url 'catalog:delete' product.pk %}" class="btn btn-danger mt-auto">Удалить</a>
                     {% endif %}
-
-                    <a href="{% url 'catalog:update' product.pk %}" class="btn btn-info mt-auto">Изменить</a>
+                    {% if perms.catalog.can_unpublish_product or perms.catalog.update_product or product.owner == request.user %}
+                       <a href="{% url 'catalog:update' product.pk %}" class="btn btn-info mt-auto">Изменить</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
