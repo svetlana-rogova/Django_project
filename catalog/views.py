@@ -8,6 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.urls import reverse_lazy
 from django.http import HttpResponseForbidden
+from django.contrib import messages
 
 
 class UnpublishProductView(LoginRequiredMixin, View):
@@ -29,6 +30,9 @@ class HomeListView(ListView):
     paginate_by = 3
 
     def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser or user.has_perm('catalog.can_unpublish_product'):
+            return Product.objects.all().order_by('-created_at')
         return Product.objects.filter(is_published= True )
 
     def get_context_data(self, **kwargs):
@@ -65,18 +69,33 @@ class InfoProductDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'catalog/info_product_confirm_delete.html'
     success_url = reverse_lazy('catalog:home')
 
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser or user.has_perm('catalog.delete_product'):
+            return Product.objects.all()
+        return Product.objects.filter(owner=user)
+
 class AddInfoCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     template_name = 'catalog/add_info.html'
+    success_url = reverse_lazy('catalog:home')
 
     def form_valid(self, form):
-        self.object = form.save()
-        return HttpResponse(f"Спасибо! В каталог добавлен новый товар: {self.object.name}")
+        form.instance.owner = self.request.user
+        response = super().form_valid(form)
+        messages.success(self.request, f"Спасибо! В каталог добавлен новый товар: {self.object.name}")
+        return response
 
 class AddInfoUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     template_name = 'catalog/add_info.html'
     success_url = reverse_lazy('catalog:home')
+
+    def get_queryset(self):
+        user = self.request.user
+        if  user.is_superuser or user.has_perm('catalog.update_product') or user.has_perm('catalog.can_unpublish_product'):
+            return Product.objects.all()
+        return Product.objects.filter(owner=user)
 
