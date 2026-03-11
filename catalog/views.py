@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from catalog.forms import ProductForm
 from catalog.models import Product, Contacts
@@ -7,6 +7,19 @@ from django.views.generic.edit import CreateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.urls import reverse_lazy
+from django.http import HttpResponseForbidden
+
+
+class UnpublishProductView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        product = get_object_or_404(Product, id=pk)
+
+        if not request.user.has_perm('catalog.can_unpublish_product'):
+            return HttpResponseForbidden('У вас нет права для отмены публикации')
+
+        product.unpublish = True
+        product.save()
+        return redirect('catalog:info_product', pk=pk)
 
 
 class HomeListView(ListView):

@@ -22,7 +22,11 @@
                         <li class="text-center"> {{ product.description }}</li>
                     </ul>
                     <button type="button" class="btn btn-primary mt-auto">Купить</button>
-                    <a href="{% url 'catalog:delete' product.pk %}" class="btn btn-danger mt-auto">Удалить</a>
+
+                    {% if perms.catalog.can_unpublish_product %}
+                        <a href="{% url 'catalog:delete' product.pk %}" class="btn btn-danger mt-auto">Удалить</a>
+                    {% endif %}
+
                     <a href="{% url 'catalog:update' product.pk %}" class="btn btn-info mt-auto">Изменить</a>
                 </div>
             </div>
