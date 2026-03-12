@@ -112,3 +112,29 @@ class AddInfoUpdateView(LoginRequiredMixin, UpdateView):
         if  user.is_superuser or user.has_perm('catalog.update_product') or user.has_perm('catalog.can_unpublish_product'):
             return Product.objects.all()
         return Product.objects.filter(owner=user)
+
+class CategoryProductListView(LoginRequiredMixin, ListView):
+    template_name = 'catalog/category_product.html'
+    context_object_name = 'products'
+    paginate_by = 3
+
+    def get_queryset(self):
+        category_name = self.kwargs.get('category')
+        user = self.request.user
+        cache_key = f'product_queryset_{category_name}_{user.id}'
+        queryset = cache.get(cache_key)
+        if not queryset:
+            list_product = get_products(category_name)
+            if user.is_superuser or user.has_perm('catalog.can_unpublish_product'):
+                queryset = list_product.order_by('-created_at')
+            else:
+                queryset = list_product.filter(is_published=True).order_by('-created_at')
+            cache.set(cache_key, queryset, 60 * 15)
+        return queryset
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category_name = self.kwargs.get('category')
+        context['category'] = Category.objects.get(name=category_name)
+        return context
