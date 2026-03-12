@@ -15,8 +15,18 @@
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{form.non_field_error}}
-                        {{form.as_p}}
+                        {{ form.category }}
+                        {{ form.name }}
+                        {{ form.image }}
+                        {{ form.description }}
+                        {{ form.purchase_price }}
+                        <div class="card-body ">
+                            {% if perms.catalog.can_unpublish_product %}
+                            {{ form.is_published }}
+                            Опубликовать
 
+                            {% endif %}
+                        </div>
                         <button type="submit" class="btn btn-lg btn-primary">
                             Сохранить
                         </button>
