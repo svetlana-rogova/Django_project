@@ -11,18 +11,12 @@
 </div>
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">Каталог</h1>
-    <p class="lead">На нашем сайте Вы можете приобрести товары следующих категорий:</p>
+    <p class="lead">Товары категории {{ category.name }}:</p>
 </div>
-<div class="pb-md-4  text-center">
-    {% for category in categories %}
-      <a href="{% url 'catalog:category_product' category.name %}" class="btn btn-info mt-auto">
-        {{ category.name }}
-      </a>
-    {% endfor %}
-</div>
+
 <div class="container">
     <div class="row text-center  justify-content-center">
-        {% for product in posts %}
+        {% for product in products %}
         <div class="col-3 mb-3">
             <div class="card h-100 d-flex flex-column">
                 <div class="card-body ">
